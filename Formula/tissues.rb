@@ -9,7 +9,7 @@ class Tissues < Formula
 
   def install
     system "npm", "install", "--global", "--prefix", libexec, "."
-    bin.install_symlink Dir["#{libexec}/bin/*"]
+    bin.install_symlink libexec/"bin/tissues"
   end
 
   test do
