@@ -10,7 +10,7 @@ class Tissues < Formula
   def install
     system "npm", "install", "--global", "--prefix", libexec, "."
     bin.mkpath
-    system "ln", "-sf", "#{libexec}/bin/tissues", "#{bin}/tissues"
+    (bin/"tissues").make_symlink(libexec/"bin/tissues")
   end
 
   test do
