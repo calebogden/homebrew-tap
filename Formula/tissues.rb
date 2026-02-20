@@ -9,8 +9,8 @@ class Tissues < Formula
 
   def install
     system "npm", "install", "--global", "--prefix", libexec, "."
-    (bin/"tissues").write_env_script libexec/"bin/tissues",
-      PATH: "#{Formula["node"].opt_bin}:#{ENV["PATH"]}"
+    bin.mkpath
+    system "ln", "-sf", "#{libexec}/bin/tissues", "#{bin}/tissues"
   end
 
   test do
