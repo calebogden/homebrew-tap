@@ -9,8 +9,12 @@ class Tissues < Formula
 
   def install
     system "npm", "install", "--global", "--prefix", libexec, "."
-    bin.mkpath
-    (bin/"tissues").make_symlink(libexec/"bin/tissues")
+    script = libexec/"lib/node_modules/tissues/bin/tissues.js"
+    (bin/"tissues").write <<~SH
+      #!/bin/sh
+      exec "#{Formula["node"].opt_bin}/node" "#{script}" "$@"
+    SH
+    chmod 0755, bin/"tissues"
   end
 
   test do
