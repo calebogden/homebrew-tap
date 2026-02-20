@@ -1,8 +1,8 @@
 class Tissues < Formula
   desc "AI-enhanced GitHub issue creation with built-in safety guardrails"
   homepage "https://tissues.cc"
-  url "https://registry.npmjs.org/tissues/-/tissues-0.4.0.tgz"
-  sha256 "b70d72b2807ecad067c28a75e7f8c59d95f29e093c5c707e20d12c10548ab885"
+  url "https://registry.npmjs.org/tissues/-/tissues-0.4.1.tgz"
+  sha256 "a0e44eb95761f1d144bb693bf9c9c52dc7faf744d9be54909a992b9ce3d11d0a"
   license "MIT"
 
   depends_on "node"
