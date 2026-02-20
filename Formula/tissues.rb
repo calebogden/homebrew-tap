@@ -8,21 +8,16 @@ class Tissues < Formula
   depends_on "node"
 
   def install
-    system "npm", "install", "--global", "--prefix", libexec, "."
+    # npm install --global . creates a dangling symlink to the temp build dir.
+    # Pack first so npm copies files properly rather than symlinking.
+    system "npm", "pack"
+    system "npm", "install", "--global", "--prefix", libexec, "tissues-#{version}.tgz"
     script = libexec/"lib/node_modules/tissues/bin/tissues.js"
-    ohai "script exists: #{script.exist?}, bin path: #{bin}"
-    begin
-      bin.mkpath
-      (bin/"tissues").write <<~SH
-        #!/bin/sh
-        exec "#{Formula["node"].opt_bin}/node" "#{script}" "$@"
-      SH
-      chmod 0755, bin/"tissues"
-      ohai "bin/tissues created: #{(bin/'tissues').exist?}"
-    rescue => e
-      ohai "FAILED: #{e.class}: #{e.message}"
-      raise
-    end
+    (bin/"tissues").write <<~SH
+      #!/bin/sh
+      exec "#{Formula["node"].opt_bin}/node" "#{script}" "$@"
+    SH
+    chmod 0755, bin/"tissues"
   end
 
   test do
