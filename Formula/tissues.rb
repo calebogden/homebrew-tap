@@ -8,10 +8,10 @@ class Tissues < Formula
   depends_on "node"
 
   def install
-    # npm install --global . creates a dangling symlink to the temp build dir.
-    # Pack first so npm copies files properly rather than symlinking.
+    # Pack first — npm install from . creates a dangling symlink to the temp
+    # build directory, which is deleted after install.
     system "npm", "pack"
-    system "npm", "install", "--global", "--prefix", libexec, "tissues-#{version}.tgz"
+    system "npm", "install", *std_npm_args, "tissues-#{version}.tgz"
     script = libexec/"lib/node_modules/tissues/bin/tissues.js"
     (bin/"tissues").write <<~SH
       #!/bin/sh
